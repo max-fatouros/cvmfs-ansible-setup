@@ -22,17 +22,11 @@ stratum_1s:
   hosts:
     ltpord02:
 
-stratum_proxies:
+proxies:
   hosts:
     ltpord03:
 
-stratum_clients:
+clients:
   hosts:
     ltpord04:
 
-stratum_related:
-  children:
-    stratum_0:
-    stratum_1s:
-    stratum_proxies:
-    stratum_clients:

@@ -1,8 +1,8 @@
 - import_playbook: setup_stratum-0.yaml
 - import_playbook: setup_stratum-1.yaml
-- import_playbook: setup_stratum_proxies.yaml
+- import_playbook: setup_proxies.yaml
 
-- hosts: stratum_related
+- hosts: all
   gather_facts: true
 
 - hosts: stratum_0
@@ -32,25 +32,25 @@
       loop: "{{ cvmfs_server.repositories }}"
 
 
-- hosts: stratum_proxies
+- hosts: proxies
   gather_facts: false
   become: true
   vars_files:
     - vars.yaml
 
   tasks:
-    - include_tasks: tasks/add_stratum_proxy.yaml
+    - include_tasks: tasks/add_proxy.yaml
       loop: "{{ cvmfs_server.repositories }}"
 
 
-- hosts: stratum_clients
+- hosts: clients
   gather_facts: false
   become: true  
   vars_files:
     - vars.yaml
 
   tasks:
-    - include_tasks: tasks/add_stratum_client.yaml
+    - include_tasks: tasks/add_client.yaml
       loop: "{{ cvmfs_server.repositories }}"
 
     - name: Create default.local
@@ -58,6 +58,6 @@
         dest: "/etc/cvmfs/default.local"
         content: |
           CVMFS_REPOSITORIES="{{ cvmfs_server.repositories|join(',') }}"
-          CVMFS_HTTP_PROXY="http://{{ groups['stratum_proxies'] | map('extract', hostvars, ['ansible_default_ipv4', 'address'])|join(':3128;http://') }}:3128"
+          CVMFS_HTTP_PROXY="http://{{ groups['proxies'] | map('extract', hostvars, ['ansible_default_ipv4', 'address'])|join(':3128;http://') }}:3128"
           
 
