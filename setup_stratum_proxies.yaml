@@ -1,0 +1,7 @@
+- hosts: stratum_proxies
+  become: true
+  vars_files:
+    - vars.yaml
+  
+  tasks:
+    - include_tasks: tasks/add_stratum_proxy.yaml

@@ -1,0 +1,31 @@
+- name: Ubuntu install
+  block:
+    - name: Get CVMFS package
+      get_url:
+        url=https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest_all.deb
+        dest="/home/{{ ansible_user }}/cvmfs-release-latest_all.deb"
+
+    - name: Install .deb
+      ansible.builtin.package:
+        deb: "/home/{{ ansible_user }}/cvmfs-release-latest_all.deb"
+
+    - name: Delete downloaded cvmfs deb file
+      file:
+        path: "/home/{{ ansible_user }}/cvmfs-release-latest_all.deb"
+        state: absent
+
+    - name: Install cvmfs
+      package:
+        update_cache: true
+        name: cvmfs
+  when: ansible_distribution == 'Ubuntu'
+
+- name: RedHat install
+  block:
+    - import_tasks: tasks/add_cvmfs_yum_repository.yaml
+
+    - name: Update package cache and download cvmfs
+      ansible.builtin.package:
+        update_cache: yes
+        name: cvmfs
+  when: ansible_distribution == 'RedHat'

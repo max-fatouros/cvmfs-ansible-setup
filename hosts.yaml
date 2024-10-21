@@ -1,0 +1,38 @@
+all:
+  hosts:
+    ltpord01:
+      ansible_host: ltpord01.psi.ch
+      ansible_user: mfatouro
+    ltpord02:
+      ansible_host: ltpord02.psi.ch
+      ansible_user: mfatouro
+    ltpord03:
+      ansible_host: t3ltpord03.psi.ch
+      ansible_user: mfatouro
+    ltpord04:
+      ansible_host: t3ltpord04.psi.ch
+      ansible_user: mfatouro
+
+# There should only be one stratum_0 at a time
+stratum_0:
+  hosts:
+    ltpord01:
+
+stratum_1s:
+  hosts:
+    ltpord02:
+
+stratum_proxies:
+  hosts:
+    ltpord03:
+
+stratum_clients:
+  hosts:
+    ltpord04:
+
+stratum_related:
+  children:
+    stratum_0:
+    stratum_1s:
+    stratum_proxies:
+    stratum_clients:

@@ -1,0 +1,43 @@
+- name: Take the string "<org.tld>" from "<repo.org.tld>"
+  set_fact:
+    domain_name: "{{ (item|split('.'))[1:]|join('.') }}"
+
+- name: Ensure key directory exists
+  file:
+    path: "/etc/cvmfs/keys/{{ domain_name }}/"
+    state: directory
+
+- name: Upload stratum 0 public keys for each repository
+  copy:
+    src: "{{ item }}.pub"
+    dest: "/etc/cvmfs/keys/{{ domain_name }}/{{ item }}.pub"
+
+- name: Add replica repository from Stratum 0
+  shell:
+    cmd: |
+      cvmfs_server add-replica http://{{ hostvars[groups['stratum_0'][0]]['ansible_default_ipv4']['address'] }}/cvmfs/{{ item }} /etc/cvmfs/keys/{{ domain_name }}/ <<< "
+      "
+    creates: "/var/spool/cvmfs/{{ item }}"
+
+- name: Update Stratum 1 repositories
+  command:
+    cmd: "cvmfs_server snapshot {{ item }}"
+
+- name: Upload log rotation rules
+  blockinfile:
+    path: /etc/logrotate.d/cvmfs
+    block: |
+      /var/log/cvmfs/*.log {
+        weekly
+        missingok
+        notifempty
+      }
+    create: true
+
+- name: Add cron job to update repository
+  lineinfile:
+    path: /etc/cron.d/cvmfs_stratum-1_snapshot
+    line: '*/5 * * * * root output=$(/usr/bin/cvmfs_server snapshot -a -i 2>&1) || echo "$output"'
+    create: true
+
+

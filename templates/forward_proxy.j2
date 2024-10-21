@@ -1,0 +1,28 @@
+# https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/03_stratum1_proxies/#323-configuration
+
+# List of local IP addresses (separate IPs and/or CIDR notation) allowed to access your local proxy
+acl local_nodes src 192.33.123.0/24 129.129.179.0/24
+
+# Destinations that are allowed
+acl stratum_ones dst {{ groups['stratum_1s'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(' ') }}
+
+# Squid port
+http_port 3128
+
+# Deny access to anything which is not part of our stratum_ones ACL.
+http_access deny !stratum_ones
+
+# Only allow access from our local machines
+http_access allow local_nodes
+http_access allow localhost
+
+# Finally, deny all other access to this proxy
+http_access deny all
+
+minimum_expiry_time 0
+maximum_object_size 1024 MB
+
+cache_mem 128 MB
+maximum_object_size_in_memory 128 KB
+cache_dir ufs /var/spool/squid {{ cvmfs_server.proxy.cache_size }} 16 256
+

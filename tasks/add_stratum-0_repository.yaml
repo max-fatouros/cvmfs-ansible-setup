@@ -1,0 +1,19 @@
+# here-string used to redirect <enter> to command
+- name: Create repositories
+  shell:
+    cmd: |
+      cvmfs_server mkfs {{ item }} <<< "
+      "
+    creates: "/var/spool/cvmfs/{{ item }}"
+
+- name: Add Cron job to resign whitelist
+  lineinfile:
+    path: "/etc/cron.d/cvmfs_resign"
+    line: "0 11 * * 1 root /usr/bin/cvmfs_server resign {{ item }}"
+    create: true
+
+- name: Download public key
+  fetch:
+    src: "/etc/cvmfs/keys/{{ item }}.pub"
+    dest: "{{ item }}.pub"
+    flat: true

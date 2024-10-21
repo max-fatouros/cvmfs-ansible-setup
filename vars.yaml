@@ -1,0 +1,7 @@
+cvmfs_server:
+  repositories:
+    - tmp.org.tld
+  proxy:
+    cache_size: 5000  # MB
+
+

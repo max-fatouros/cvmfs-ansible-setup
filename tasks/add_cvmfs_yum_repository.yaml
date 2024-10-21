@@ -1,0 +1,4 @@
+- name: Add cvmfs yum repository
+  ansible.builtin.package:
+    name: https://ecsft.cern.ch/dist/cvmfs/cvmfs-release/cvmfs-release-latest.noarch.rpm
+    disable_gpg_check: true

@@ -1,0 +1,25 @@
+- import_tasks: tasks/install_cvmfs.yaml
+
+- name: Take the string "<org.tld>" from "<repo.org.tld>"
+  set_fact:
+    domain_name: "{{ (item|split('.'))[1:]|join('.') }}"
+
+- name: Ensure key directory exists
+  file:
+    path: "/etc/cvmfs/keys/{{ domain_name }}/"
+    state: directory
+
+- name: Upload stratum 0 public keys for each repository
+  copy:
+    src: "{{ item }}.pub"
+    dest: "/etc/cvmfs/keys/{{ domain_name }}/{{ item }}.pub"
+
+
+- name: Create domain-specific config
+  blockinfile:
+    path: "/etc/cvmfs/domain.d/{{ domain_name }}.conf"
+    block: |
+      CVMFS_SERVER_URL="http://{{ groups['stratum_1s'] | map('extract', hostvars, ['ansible_default_ipv4', 'address'])|join('/cvmfs/@fqrn@;http://') }}/cvmfs/@fqrn@"
+      CVMFS_KEYS_DIR="/etc/cvmfs/keys/{{ domain_name }}"
+    create: true
+
