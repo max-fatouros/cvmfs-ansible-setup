@@ -1,0 +1,13 @@
+- name: Test connection
+  gather_facts: true
+  hosts: all
+  tasks:
+    - name: Ping
+      ping:
+
+    - name: System details
+      debug:
+        msg: |
+          {{ ansible_distribution }}
+          {{ ansible_distribution_version }}
+          {{ ansible_user }}

@@ -1,0 +1,12 @@
+- name: Remove sudo password
+  gather_facts: true
+  hosts: all
+
+  tasks:
+    - name: Add user to passwordless sudoers
+      become: true
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers
+        regexp: '^${{ ansible_user  }}'
+        line: '%{{ ansible_user  }} ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
