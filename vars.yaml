@@ -1,7 +1,7 @@
 cvmfs_server:
   repositories:
     - tmp.org.tld
-  proxy:
+  proxy:  # Forward and standalone proxy
     cache_size: 5000  # MB
 
 
