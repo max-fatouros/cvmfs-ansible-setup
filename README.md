@@ -1,6 +1,6 @@
 # CVMFS Server Setup (using Ansible)
 
-Set up CVMFS repositories on Stratum 0 machine, Stratum 1 (with reverse proxy) machine, forward caching proxy machine, and client machine.
+Set up CVMFS repositories on a Stratum 0 machine, Stratum 1 (with reverse proxy) machines, forward caching proxy machines, and a client machines.
 Based on the following documentation.
 
 1. [Official docs](https://cvmfs.readthedocs.io/en/stable/cpt-repo.html)
