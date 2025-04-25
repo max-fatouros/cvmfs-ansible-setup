@@ -2,6 +2,18 @@
   set_fact:
     domain_name: "{{ (item|split('.'))[1:]|join('.') }}"
 
+
+- name: Add log config
+  blockinfile:
+    path: "/etc/cvmfs/config.d/{{ item }}.conf"
+    block: |
+      /var/log/cvmfs/*.log {
+        weekly
+        missingok
+        notifempty
+      }
+    create: true
+
 - name: Ensure key directory exists
   file:
     path: "/etc/cvmfs/keys/{{ domain_name }}/"
