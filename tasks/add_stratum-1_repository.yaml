@@ -24,12 +24,22 @@
     src: "{{ item }}.pub"
     dest: "/etc/cvmfs/keys/{{ domain_name }}/{{ item }}.pub"
 
+
+
+- name: Get list of cvmfs repositories
+  shell: cvmfs_server list
+  register: cvmfs_server_list
+
+
 - name: Add replica repository from Stratum 0
   shell:
     cmd: |
       cvmfs_server add-replica http://{{ hostvars[groups['stratum_0'][0]]['ansible_default_ipv4']['address'] }}/cvmfs/{{ item }} /etc/cvmfs/keys/{{ domain_name }}/ <<< "
       "
     creates: "/var/spool/cvmfs/{{ item }}"
+  when:
+    "not cvmfs_server_list.stdout | regex_search('^item  ', multiline=True)"
+
 
 - name: Update Stratum 1 repositories
   command:
