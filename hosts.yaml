@@ -1,10 +1,10 @@
 all:
   hosts:
     ltpord01:
-      ansible_host: ltpord01.psi.ch
+      ansible_host: t3ltpord01.psi.ch
       ansible_user: mfatouro
     ltpord02:
-      ansible_host: ltpord02.psi.ch
+      ansible_host: t3ltpord02.psi.ch
       ansible_user: mfatouro
     ltpord03:
       ansible_host: t3ltpord03.psi.ch
@@ -12,6 +12,10 @@ all:
     ltpord04:
       ansible_host: t3ltpord04.psi.ch
       ansible_user: mfatouro
+    pc16571:
+      ansible_host: pc16571.psi.ch
+      ansible_user: psihep
+
 
 # There should only be one stratum_0 at a time
 stratum_0:
@@ -25,8 +29,10 @@ stratum_1s:
 proxies:
   hosts:
     ltpord03:
+    pc16571:
 
 clients:
   hosts:
     ltpord04:
+    pc16571:
 
