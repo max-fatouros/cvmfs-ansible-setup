@@ -21,6 +21,11 @@
         src: "templates/reverse_proxy.conf"
         dest: "/etc/squid/squid.conf"
 
+
+    - name: install python3.12-mod_wsgi
+      package:
+        name: python3.12-mod_wsgi
+
     - name: Start Apache webserver
       service:
         name: httpd.service
