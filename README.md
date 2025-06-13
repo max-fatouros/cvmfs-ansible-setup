@@ -16,9 +16,8 @@ ansible-galaxy collection install git+https://github.com/max-fatouros/cvmfs-ansi
 ```
 
 ### Setup
-1. Create a [`hosts.yml`](hosts.yml) file. 
-The link to the left shows an example of this file filled out.
-Add the stratum-0, stratum-1, proxy, and client machines to it. 
+1. Copy the [`hosts.yml`](hosts.yml) file. 
+Replace the hosts under the stratum-0, stratum-1, proxy, client, and cvmfs groups with the ones you want to use. 
 The format of this file is described [here](https://docs.ansible.com/ansible/latest/inventory_guide/intro_inventory.html).
 
 2. Create a copy of this [`ansible.cfg`](ansible.cfg) file.
