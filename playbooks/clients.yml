@@ -8,7 +8,7 @@
   gather_facts: true
   become: true
   collections:
-    - cern.cvmfs
+    - cvmfs.setup
   roles:
-    - cern.cvmfs.common
-    - cern.cvmfs.clients
+    - cvmfs.setup.common
+    - cvmfs.setup.clients

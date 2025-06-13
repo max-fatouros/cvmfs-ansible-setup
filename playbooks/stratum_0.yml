@@ -3,7 +3,7 @@
   gather_facts: true
   become: true
   collections:
-    - cern.cvmfs
+    - cvmfs.setup
   roles:
-    - cern.cvmfs.common
-    - cern.cvmfs.stratum_0
+    - cvmfs.setup.common
+    - cvmfs.setup.stratum_0
