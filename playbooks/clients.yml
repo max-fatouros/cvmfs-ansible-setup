@@ -1,6 +1,7 @@
 - hosts:
-    - proxies
+    - stratum_0
     - stratum_1s
+    - proxies
   gather_facts: true
 
 - name: Setup CVMFS Clients

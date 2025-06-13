@@ -1,4 +1,6 @@
-- hosts: stratum_1s
+- hosts:
+    - stratum_0
+    - stratum_1s
   gather_facts: true
 
 - name: Setup proxies

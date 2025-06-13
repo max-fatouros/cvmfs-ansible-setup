@@ -19,8 +19,12 @@
 
 - name: Get stratum 1 if defined, else stratum 0.
   set_fact:
-    group: "{{ groups['stratum_1s'] | default( groups['stratum_0'][0], true)}}"
+    group: "{{ groups['stratum_1s'] | default( groups['stratum_0'], true)}}"
 
+
+- name: Print group
+  debug:
+    var: group
 
 - name: Create domain-specific config
   blockinfile:

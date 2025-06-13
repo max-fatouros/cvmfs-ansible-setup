@@ -4,7 +4,7 @@
 acl local_nodes src 192.33.123.0/24 129.129.179.0/24
 
 # Destinations that are allowed
-acl stratum_ones dst {{ groups['stratum_1s'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(' ') }}
+acl stratum_ones dst {{ group | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(' ') }}
 
 # Squid port
 http_port 3128
