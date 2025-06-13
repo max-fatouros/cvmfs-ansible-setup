@@ -1,11 +1,11 @@
 - name: Import Stratum 0 Setup Playbook
-  import_playbook: setup_stratum_0.yml
+  import_playbook: stratum_0.yml
 
 - name: Import Stratum 1 Setup Playbook
-  import_playbook: setup_stratum_1.yml
+  import_playbook: stratum_1.yml
 
 - name: Import Proxies Setup Playbook
-  import_playbook: setup_proxies.yml
+  import_playbook: proxies.yml
 
 - name: Import Clients Setup Playbook
-  import_playbook: setup_clients.yml
+  import_playbook: clients.yml
