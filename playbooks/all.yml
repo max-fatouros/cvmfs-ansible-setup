@@ -2,7 +2,7 @@
   import_playbook: stratum_0.yml
 
 - name: Import Stratum 1 Setup Playbook
-  import_playbook: stratum_1.yml
+  import_playbook: stratum_1s.yml
 
 - name: Import Proxies Setup Playbook
   import_playbook: proxies.yml
