@@ -17,11 +17,16 @@
     dest: "/etc/cvmfs/keys/{{ domain_name }}/{{ item }}.pub"
 
 
+- name: Get stratum 1 if defined, else stratum 0.
+  set_fact:
+    group: "{{ groups['stratum_1s'] | default( groups['stratum_0'][0], true)}}"
+
+
 - name: Create domain-specific config
   blockinfile:
     path: "/etc/cvmfs/domain.d/{{ domain_name }}.conf"
     block: |
-      CVMFS_SERVER_URL="http://{{ groups['stratum_1s'] | map('extract', hostvars, ['ansible_default_ipv4', 'address'])|join('/cvmfs/@fqrn@;http://') }}/cvmfs/@fqrn@"
+      CVMFS_SERVER_URL="http://{{ group | map('extract', hostvars, ['ansible_default_ipv4', 'address'])|join('/cvmfs/@fqrn@;http://') }}/cvmfs/@fqrn@"
       CVMFS_KEYS_DIR="/etc/cvmfs/keys/{{ domain_name }}"
     create: true
 
