@@ -1,0 +1,12 @@
+- hosts: stratum_0
+  gather_facts: true
+
+- name: Setup CVMFS Stratum 1
+  hosts: stratum_1s
+  gather_facts: false
+  become: true
+  collections:
+    - cern.cvmfs
+  roles:
+    - cern.cvmfs.common
+    - cern.cvmfs.stratum_1

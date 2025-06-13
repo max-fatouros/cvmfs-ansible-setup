@@ -4,7 +4,7 @@
 
 - name: Upload squid config
   template:
-    src: "templates/forward_proxy.j2"
+    src: "forward_proxy.j2"
     dest: "/etc/squid/squid.conf"
 
 - name: Start squid proxy

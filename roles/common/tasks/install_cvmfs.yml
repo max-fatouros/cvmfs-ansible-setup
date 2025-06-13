@@ -22,7 +22,7 @@
 
 - name: RedHat install
   block:
-    - import_tasks: tasks/add_cvmfs_yum_repository.yaml
+    - import_tasks: tasks/add_cvmfs_yum_repository.yml
 
     - name: Update package cache and download cvmfs
       ansible.builtin.package:

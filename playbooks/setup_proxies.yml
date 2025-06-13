@@ -1,0 +1,12 @@
+- hosts: stratum_1s
+  gather_facts: true
+
+- name: Setup proxies
+  hosts: proxies
+  gather_facts: false
+  become: true
+  collections:
+    - cern.cvmfs
+  roles:
+    - cern.cvmfs.common
+    - cern.cvmfs.proxies

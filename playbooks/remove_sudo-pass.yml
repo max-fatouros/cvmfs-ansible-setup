@@ -1,6 +1,6 @@
 - name: Remove sudo password
   gather_facts: true
-  hosts: all
+  hosts: cvmfs
 
   tasks:
     - name: Add user to passwordless sudoers

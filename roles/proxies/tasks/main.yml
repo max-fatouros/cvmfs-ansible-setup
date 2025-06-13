@@ -1,0 +1,2 @@
+- include_tasks: add_proxy.yml
+  loop: "{{ cvmfs_server.repositories }}"

@@ -1,4 +1,4 @@
-- import_tasks: tasks/add_cvmfs_yum_repository.yaml
+- import_tasks: tasks/add_cvmfs_yum_repository.yml
 
 - name: Install cvmfs-server
   ansible.builtin.package:

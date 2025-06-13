@@ -1,0 +1,25 @@
+- name: Assert that there is only one stratum_0 host defined
+  assert:
+    that: "{{ play_hosts|length }} <= 1"
+
+- import_role:
+    name: common
+    tasks_from: install_cvmfs-server
+
+- import_role:
+    name: common
+    tasks_from: install_cvmfs
+
+- name: start Apache webserver
+  service:
+    name: httpd.service
+    state: started
+    enabled: yes
+
+- name: Stop autofs service
+  service:
+    name: autofs.service
+    state: stopped
+
+- include_tasks: add_stratum-0_repository.yml
+  loop: "{{ cvmfs_server.repositories }}"

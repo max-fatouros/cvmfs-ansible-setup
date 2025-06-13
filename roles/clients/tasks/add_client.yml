@@ -1,4 +1,6 @@
-- import_tasks: tasks/install_cvmfs.yaml
+- import_role:
+    name: common
+    tasks_from: install_cvmfs
 
 - name: Take the string "<org.tld>" from "<repo.org.tld>"
   set_fact:
