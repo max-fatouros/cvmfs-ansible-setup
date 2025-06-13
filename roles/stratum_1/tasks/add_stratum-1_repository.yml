@@ -21,7 +21,7 @@
 
 - name: Upload stratum 0 public keys for each repository
   copy:
-    src: "{{ item }}.pub"
+    src: "/tmp/{{ item }}.pub"
     dest: "/etc/cvmfs/keys/{{ domain_name }}/{{ item }}.pub"
 
 

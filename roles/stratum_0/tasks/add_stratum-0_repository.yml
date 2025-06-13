@@ -15,5 +15,5 @@
 - name: Download public key
   fetch:
     src: "/etc/cvmfs/keys/{{ item }}.pub"
-    dest: "{{ item }}.pub"
+    dest: "/tmp/{{ item }}.pub"
     flat: true
