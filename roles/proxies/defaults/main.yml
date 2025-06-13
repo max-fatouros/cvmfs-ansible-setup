@@ -1,0 +1,2 @@
+proxy:
+  cache_size: 5000  # MB

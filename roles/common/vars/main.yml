@@ -1,5 +1,0 @@
-cvmfs_server:
-  repositories:
-    - testing.psi.ch
-  proxy:  # Forward and standalone proxy
-    cache_size: 5000  # MB

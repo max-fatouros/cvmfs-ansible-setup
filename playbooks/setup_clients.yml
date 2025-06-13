@@ -3,8 +3,8 @@
     - stratum_1s
   gather_facts: true
 
-- name: Setup CVMFS Stratum 1
-  hosts: stratum_1s
+- name: Setup CVMFS Clients
+  hosts: clients
   gather_facts: true
   become: true
   collections:

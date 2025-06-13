@@ -22,4 +22,4 @@
     state: stopped
 
 - include_tasks: add_stratum-0_repository.yml
-  loop: "{{ cvmfs_server.repositories }}"
+  loop: "{{ repositories }}"

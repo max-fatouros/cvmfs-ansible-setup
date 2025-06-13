@@ -24,5 +24,4 @@ maximum_object_size 1024 MB
 
 cache_mem 128 MB
 maximum_object_size_in_memory 128 KB
-cache_dir ufs /var/spool/squid {{ cvmfs_server.proxy.cache_size }} 16 256
-
+cache_dir ufs /var/spool/squid {{ proxy.cache_size }} 16 256

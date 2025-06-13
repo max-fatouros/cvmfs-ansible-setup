@@ -1,9 +1,9 @@
     - include_tasks: add_client.yml
-      loop: "{{ cvmfs_server.repositories }}"
+      loop: "{{ repositories }}"
 
     - name: Create default.local
       copy:
         dest: "/etc/cvmfs/default.local"
         content: |
-          CVMFS_REPOSITORIES="{{ cvmfs_server.repositories|join(',') }}"
+          CVMFS_REPOSITORIES="{{ repositories|join(',') }}"
           CVMFS_HTTP_PROXY="http://{{ groups['proxies'] | map('extract', hostvars, ['ansible_default_ipv4', 'address'])|join(':3128;http://') }}:3128"

@@ -35,4 +35,4 @@
     enabled: true
 
 - include_tasks: add_stratum-1_repository.yml
-  loop: "{{ cvmfs_server.repositories }}"
+  loop: "{{ repositories }}"
