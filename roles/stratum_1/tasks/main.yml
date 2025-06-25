@@ -34,5 +34,26 @@
     state: started
     enabled: true
 
+
+- name: Create server.local
+  file:
+    path: "/etc/cvmfs/server.local"
+    mode: 600
+    state: touch
+
+# https://cvmfs.readthedocs.io/en/stable/cpt-replica.html#geo-api-setup
+- name: Set geo api key for testing
+  lineinfile:
+    path: "/etc/cvmfs/server.local"
+    line: "CVMFS_GEO_DB_FILE={{ geo_api_license_key }}"
+  when: geo_api_license_key == "NONE"
+
+- name: Add Geo API licence key
+  lineinfile:
+    path: "/etc/cvmfs/server.local"
+    line: "CVMFS_GEO_LICENSE_KEY={{ geo_api_license_key }}"
+  when: geo_api_license_key  != "NONE"
+
+
 - include_tasks: add_stratum-1_repository.yml
   loop: "{{ repositories }}"

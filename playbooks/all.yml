@@ -1,3 +1,6 @@
+- name: Import iproute installation Playbook
+  import_playbook: iproute.yml
+
 - name: Import Stratum 0 Setup Playbook
   import_playbook: stratum_0.yml
 

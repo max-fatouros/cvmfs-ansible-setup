@@ -10,6 +10,14 @@
     name: common
     tasks_from: install_cvmfs
 
+- name: Install apache webserver
+  package:
+    name: httpd
+
+- name: Install Autofs
+  package:
+    name: autofs
+
 - name: start Apache webserver
   service:
     name: httpd.service

@@ -1,0 +1,14 @@
+- name: Install iproute for ansible
+  hosts: cvmfs
+  gather_facts: true
+  become: true
+  tasks:
+    - name: Install iproute
+      apt:
+        name: iproute2
+      when: ansible_os_family == "Debian"
+
+    - name: Install iproute
+      dnf:
+        name: iproute
+      when: ansible_os_family == "RedHat"

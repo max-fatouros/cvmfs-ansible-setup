@@ -1,0 +1,9 @@
+- name: Ubuntu install
+  apt:
+    name: iproute2
+  when: ansible_os_family == "Debian"
+
+- name: RedHat install
+  dnf:
+    name: iproute
+  when: ansible_os_family == 'RedHat'

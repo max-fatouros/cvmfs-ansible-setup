@@ -18,7 +18,7 @@
       package:
         update_cache: true
         name: cvmfs
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_os_family == "Debian"
 
 - name: RedHat install
   block:
@@ -28,4 +28,4 @@
       ansible.builtin.package:
         update_cache: yes
         name: cvmfs
-  when: ansible_distribution == 'RedHat'
+  when: ansible_os_family == "RedHat"

@@ -1,3 +1,8 @@
+
+
+- debug:
+    msg: "Adding {{ item }}"
+
 # here-string used to redirect <enter> to command
 - name: Create repositories
   shell:
