@@ -24,6 +24,7 @@
         var: ip
     - apt:
         name: inetutils-ping
+      when: ansible_os_family == "Debian"
     - command: ping -c 4 "{{ ip }}"
       register: ping
     - debug:
