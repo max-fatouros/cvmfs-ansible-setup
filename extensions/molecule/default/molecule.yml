@@ -1,0 +1,72 @@
+---
+driver:
+  name: podman
+platforms:
+  - name: stratum_0
+    image: almalinux:9
+    pre_build_image: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - stratum_0_var_spool_cvmfs:/var/spool/cvmfs
+    privileged: true
+    command: "/usr/sbin/init"
+    groups:
+      - cvmfs
+      - stratum_0
+
+  - name: stratum_1
+    image: almalinux:9
+    pre_build_image: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - stratum_1_var_spool_cvmfs:/var/spool/cvmfs
+    privileged: true
+    command: "/usr/sbin/init"
+    groups:
+      - cvmfs
+      - stratum_1s
+
+  - name: proxy_1
+    image: almalinux:9
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: "/usr/sbin/init"
+    pre_build_image: true
+    groups:
+      - cvmfs
+      - proxies
+
+  - name: client_1
+    image: almalinux:9
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    command: "/usr/sbin/init"
+    pre_build_image: true
+    groups:
+      - cvmfs
+      - clients
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      stratum_0:
+        ansible_user: root
+      stratum_1:
+        ansible_user: root
+      proxy_1:
+        ansible_user: root
+      client_1:
+        ansible_user: root
+    group_vars:
+      cvmfs:
+        geo_api_license_key: NONE
+        repositories:
+          - test_1.psi.ch
+          - test_2.psi.ch
+
+      proxies:
+        proxy:
+          cache_size: 5000  # MB

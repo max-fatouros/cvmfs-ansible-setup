@@ -1,0 +1,12 @@
+- name: Create podman volumes
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Create Stratum 0 volume
+      containers.podman.podman_volume:
+        state: present
+        name: stratum_0_var_spool_cvmfs
+    - name: Create Stratum 1 volume
+      containers.podman.podman_volume:
+        state: present
+        name: stratum_0_var_spool_cvmfs

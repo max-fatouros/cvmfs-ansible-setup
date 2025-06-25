@@ -1,0 +1,26 @@
+- ansible.builtin.import_playbook: ../../../playbooks/iproute.yml
+- ansible.builtin.import_playbook: ../../../playbooks/stratum_0.yml
+- ansible.builtin.import_playbook: ../../../playbooks/stratum_1s.yml
+- ansible.builtin.import_playbook: ../../../playbooks/proxies.yml
+- ansible.builtin.import_playbook: ../../../playbooks/clients.yml
+
+
+# - name: Add file
+#   hosts: stratum_0
+#   gather_facts: false
+#   tasks:
+#     - name: Add file to Stratum-0
+#       shell:
+#         cmd: |
+#           cvmfs_server mkfs {{ item }} <<< "
+#           "
+
+# - name: Sync file from Stratum-0 to Stratum-1
+#   hosts: stratum_1
+#   gather_facts: false
+#   tasks:
+#     - name: Add file to Stratum-0
+#       shell:
+#         cmd: |
+#           cvmfs_server mkfs {{ item }} <<< "
+#           "

@@ -1,0 +1,12 @@
+- name: Delete podman volumes
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Delete Stratum 0 volume
+      containers.podman.podman_volume:
+        state: absent
+        name: stratum_0_var_spool_cvmfs
+    - name: Delete Stratum 1 volume
+      containers.podman.podman_volume:
+        state: absent
+        name: stratum_1_var_spool_cvmfs
