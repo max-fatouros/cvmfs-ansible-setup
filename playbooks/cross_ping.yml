@@ -19,13 +19,17 @@
   tasks:
     - ping:
     - set_fact:
-        ip: "{{ hostvars[groups['stratum_0'][0]]['ansible_default_ipv4']['address'] }}"
-    - debug:
-        var: ip
+        ip_stratum_0: "{{ hostvars[groups['stratum_0'][0]]['ansible_default_ipv4']['address'] }}"
+    - name: stratum_0 ip
+      debug:
+        var: ip_stratum_0
+    - name: self-ip
+      debug:
+        var: ansible_default_ipv4.address
     - apt:
         name: inetutils-ping
       when: ansible_os_family == "Debian"
-    - command: ping -c 4 "{{ ip }}"
+    - command: ping -c 4 "{{ ip_stratum_0 }}"
       register: ping
     - debug:
         msg: "{{ ping.stdout }}"
