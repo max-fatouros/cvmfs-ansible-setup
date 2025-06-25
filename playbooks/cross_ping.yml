@@ -1,0 +1,30 @@
+- name: Install ip package for Ansible to get ipv4 address
+  hosts:
+    - stratum_0
+    - stratum_1s
+  gather_facts: true
+  become: true
+  tasks:
+      - apt:
+          name: iproute2
+          update_cache: true
+        when: ansible_os_family == 'Debian'
+
+- name: Test inter-server communications
+  hosts:
+    - stratum_0
+    - stratum_1s
+  gather_facts: true
+  become: true
+  tasks:
+    - ping:
+    - set_fact:
+        ip: "{{ hostvars[groups['stratum_0'][0]]['ansible_default_ipv4']['address'] }}"
+    - debug:
+        var: ip
+    - apt:
+        name: inetutils-ping
+    - command: ping -c 4 "{{ ip }}"
+      register: ping
+    - debug:
+        msg: "{{ ping.stdout }}"
