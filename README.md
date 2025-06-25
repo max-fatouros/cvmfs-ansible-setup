@@ -81,7 +81,7 @@ This repository uses the [`ansible-molecule`](https://ansible.readthedocs.io/pro
 
 ### Installation
 
-With [`podman`](https://podman.io/) already installed, I was able to run the tests after the command
+With [`podman`](https://podman.io/) already installed, I was able to perform the tests after running
 
 ``` bash
 pip install ansible molecule molecule-podman
