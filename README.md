@@ -7,6 +7,21 @@ The setup is based on the following documentation:
 1. [Official docs](https://cvmfs.readthedocs.io/en/stable/cpt-repo.html)
 2. [CVMFS tutorial](https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/)
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [CVMFS Server Setup (using Ansible)](#cvmfs-server-setup-using-ansible)
+  - [Initial Steps](#initial-steps)
+    - [Installation](#installation)
+    - [Setup](#setup)
+  - [Usage](#usage)
+  - [Testing](#testing)
+    - [Installation](#installation-1)
+    - [Usage](#usage-1)
+
+<!-- markdown-toc end -->
+
+
 
 ## Initial Steps
 ### Installation
@@ -59,3 +74,27 @@ Test that things are working with the command
     ansible-playbook cvmfs.setup.clients
     ```
     after running `cvmfs.setup.all`, any of the individual playbooks above case be re-ran if needed. However, they all rely on `cvmfs.setup.stratum_0` having been ran once in order for the stratum-0 public keys to be copied over properly.
+
+
+## Testing
+This repository uses the [`ansible-molecule`](https://ansible.readthedocs.io/projects/molecule/) framework for testing.
+
+### Installation
+
+With [`podman`](https://podman.io/) already installed, I was able to run the tests after the command
+
+``` bash
+pip install ansible molecule molecule-podman
+```
+
+
+Otherwise, follow these instructions to install podman and molecule
+- podman: https://podman.io/docs/installation
+- molecule: https://ansible.readthedocs.io/projects/molecule/installation/
+
+### Usage
+from the [`extensions`](extensions/) directory, run
+
+``` bash
+molecule test
+```
