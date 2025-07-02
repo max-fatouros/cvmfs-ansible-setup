@@ -70,3 +70,4 @@ provisioner:
       proxies:
         proxy:
           cache_size: 5000  # MB
+          access_list: "all"

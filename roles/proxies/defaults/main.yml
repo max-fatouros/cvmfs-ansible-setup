@@ -1,2 +1,5 @@
 proxy:
   cache_size: 5000  # MB
+  # List of local IP addresses (separate IPs and/or CIDR notation) allowed to access your local proxy.
+  # Seperate list items by a space.
+  access_list: ""

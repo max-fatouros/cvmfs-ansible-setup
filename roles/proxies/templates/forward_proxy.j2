@@ -1,7 +1,7 @@
 # https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/03_stratum1_proxies/#323-configuration
 
 # List of local IP addresses (separate IPs and/or CIDR notation) allowed to access your local proxy
-acl local_nodes src 192.33.123.0/24 129.129.179.0/24
+acl local_nodes src {{ proxy.access_list }}
 
 # Destinations that are allowed
 acl stratum_ones dst {{ group | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join(' ') }}
