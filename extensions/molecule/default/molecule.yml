@@ -5,6 +5,7 @@ platforms:
   - name: stratum_0
     image: almalinux:9
     pre_build_image: true
+    rootless: false
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - stratum_0_var_spool_cvmfs:/var/spool/cvmfs
@@ -17,6 +18,7 @@ platforms:
   - name: stratum_1
     image: almalinux:9
     pre_build_image: true
+    rootless: false
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
       - stratum_1_var_spool_cvmfs:/var/spool/cvmfs
@@ -28,6 +30,7 @@ platforms:
 
   - name: proxy_1
     image: almalinux:9
+    rootless: false
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
@@ -39,6 +42,7 @@ platforms:
 
   - name: client_1
     image: almalinux:9
+    rootless: false
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
     privileged: true
