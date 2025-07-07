@@ -1,0 +1,25 @@
+name: Test ansible
+
+on:
+  push:
+    branches: [ $default-branch, action ]
+  pull_request:
+    branches: [ $default-branch, action]
+
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y pip podman ansible
+      - run: sudo pip install molecule molecule-podman
+
+      - name: build and install this collection
+        run: sudo ansible-galaxy collection install .
+
+      - name: run ansible molecule tests
+        working-directory: ./extensions
+        run: sudo molecule test
