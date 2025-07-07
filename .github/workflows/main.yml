@@ -22,4 +22,4 @@ jobs:
 
       - name: run ansible molecule tests
         working-directory: ./extensions
-        run: molecule test
+        run: sudo molecule test
