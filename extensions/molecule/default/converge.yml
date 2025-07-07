@@ -5,22 +5,49 @@
 - ansible.builtin.import_playbook: ../../../playbooks/clients.yml
 
 
-# - name: Add file
-#   hosts: stratum_0
-#   gather_facts: false
-#   tasks:
-#     - name: Add file to Stratum-0
-#       shell:
-#         cmd: |
-#           cvmfs_server mkfs {{ item }} <<< "
-#           "
 
-# - name: Sync file from Stratum-0 to Stratum-1
-#   hosts: stratum_1
+- name: run chksetup on client
+  hosts: clients
+  gather_facts: false
+  tasks:
+    - name: run chksetup
+      shell:
+        cmd: |
+          cvmfs_config chksetup
+      register: chksetup
+    - assert:
+        that: chksetup.stdout == "OK"
+
+- name: Add file
+  hosts: stratum_0
+  gather_facts: false
+  tasks:
+    # https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/02_stratum0_client/#216-adding-files-to-the-repository
+    - name: Add file to Stratum-0
+      shell:
+        cmd: |
+          REPO=test_1.psi.ch
+          cvmfs_server transaction ${REPO}
+          echo '#!/bin/bash' > /cvmfs/${REPO}/hello.sh
+          echo 'echo hello' >> /cvmfs/${REPO}/hello.sh
+          chmod a+x /cvmfs/${REPO}/hello.sh
+          cvmfs_server publish ${REPO}
+
+- name: Sync file from Stratum-0 to Stratum-1
+  hosts: stratum_1
+  gather_facts: false
+  tasks:
+    - name: sync files
+      shell:
+        cmd: |
+          cvmfs_server snapshot -a
+
+
+# - name: Use file on client
+#   hosts: clients
 #   gather_facts: false
 #   tasks:
-#     - name: Add file to Stratum-0
+#     - name: run file
 #       shell:
 #         cmd: |
-#           cvmfs_server mkfs {{ item }} <<< "
-#           "
+#          /cvmfs/test_1.psi.ch/hello.sh

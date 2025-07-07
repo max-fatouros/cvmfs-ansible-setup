@@ -75,3 +75,18 @@ provisioner:
         proxy:
           cache_size: 5000  # MB
           access_list: "all"
+
+scenario:
+   test_sequence:
+    - dependency
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence  # skip for now
+    - side_effect
+    - verify
+    - cleanup
+    - destroy
