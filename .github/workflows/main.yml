@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: apt-get update
-      - run: apt-get install -y pip podman ansible
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y pip podman ansible
       - run: pip install molecule molecule-podman
 
       - name: build and install this collection
