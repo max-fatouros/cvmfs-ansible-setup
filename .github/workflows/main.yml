@@ -2,9 +2,7 @@ name: Test ansible
 
 on:
   push:
-    branches: [ $default-branch, action ]
   pull_request:
-    branches: [ $default-branch, action]
 
 
 
