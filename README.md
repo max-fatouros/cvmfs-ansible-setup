@@ -47,7 +47,7 @@ Test that things are working with the command
     ansible-playbook cvmfs.setup.ping
     ```
 
-4. Many of the ansible commands require `sudo` privileges. 
+4. Many of the ansible commands require `sudo` privileges on the remote machines. 
     If you would like to disable the sudo password on the remote machines so that the playbooks in this collection can be ran without a password, first run the following command, enter the sudo password for the machine which will have its sudo password removed, then press enter.
     ```bash
     read -s PASS
@@ -77,7 +77,7 @@ Test that things are working with the command
 
     after running `cvmfs.setup.all`, any of the individual playbooks above case be re-ran if needed. However, they all rely on `cvmfs.setup.stratum_0` having been ran once in order for the stratum-0 public keys to be copied over properly.
 
-2. To ensure that the environment was set up correctly, you could try propagating a test file through all the machines, i.e. from
+2. To ensure that the environment was set up correctly, you could try propagating a test file through all the machines. i.e. from
 
     ``` bash
     stratum-0 -> stratum-1 -> proxy -> client
