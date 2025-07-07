@@ -67,13 +67,65 @@ Test that things are working with the command
     ```
 
     this is equivalent to running
+
     ```bash
     ansible-playbook cvmfs.setup.stratum_0
     ansible-playbook cvmfs.setup.stratum_1s
     ansible-playbook cvmfs.setup.proxies
     ansible-playbook cvmfs.setup.clients
     ```
+
     after running `cvmfs.setup.all`, any of the individual playbooks above case be re-ran if needed. However, they all rely on `cvmfs.setup.stratum_0` having been ran once in order for the stratum-0 public keys to be copied over properly.
+
+2. To ensure that the environment was set up correctly, you could try propagating a test file through all the machines, i.e. from
+
+    ``` bash
+    stratum-0 -> stratum-1 -> proxy -> client
+    ```
+    
+    By following [these](https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/02_stratum0_client/#216-adding-files-to-the-repository) instructions, we can do this with the following commands
+    
+
+    1. **On the Stratum-0**
+    
+        Set an environment variable to the name of your repository.
+
+        ```bash
+        MY_REPO_NAME=<repo.org.tld>
+        ```
+
+        Then, run these commands[^1]
+
+        ```bash
+        cvmfs_server transaction ${MY_REPO_NAME}
+        echo '#!/bin/bash' > /cvmfs/${MY_REPO_NAME}/hello.sh
+        echo 'echo hello' >> /cvmfs/${MY_REPO_NAME}/hello.sh
+        chmod a+x /cvmfs/${MY_REPO_NAME}/hello.sh
+        cvmfs_server publish ${MY_REPO_NAME}
+        ```
+
+    2. **On one of the Client machines**
+
+        ```bash
+        /cvmfs/<repo.org.tld>/hello.sh
+        ``` 
+        again, replacing `<repo.org.tld>` with your cvmfs-repository names.
+
+        You can also run the following test commands on the client[^2] [^3].
+
+        ```bash
+        cvmfs_config chksetup  # should return OK
+        cvmfs_config stat -v <repo.org.tld>
+        ```
+
+        The output of the stat command should contain a line with the following
+
+        ```bash
+        Connection: http://<STRATUM1_IP>/cvmfs/repo.organization.tld through proxy http://<PROXY_IP>:3128 (online)
+        ```
+        
+    
+    
 
 
 ## Testing
@@ -124,3 +176,8 @@ ansible-galaxy collection install . --force
     molecule destroy && molecule test --destroy=never
     ```
 
+[^1]: https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/02_stratum0_client/#216-adding-files-to-the-repository
+
+[^2]: https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/02_stratum0_client/#223-mounting-the-repositories
+
+[^3]: https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/03_stratum1_proxies/#333-test-the-new-configuration
