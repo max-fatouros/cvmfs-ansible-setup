@@ -16,7 +16,7 @@ The setup is based on the following documentation:
     - [Setup](#setup)
   - [Usage](#usage)
   - [Testing](#testing)
-    - [Installation](#installation-1)
+    - [Installation / Setup](#installation--setup)
     - [Usage](#usage-1)
 
 <!-- markdown-toc end -->
@@ -77,24 +77,50 @@ Test that things are working with the command
 
 
 ## Testing
-This repository uses the [`ansible-molecule`](https://ansible.readthedocs.io/projects/molecule/) framework for testing.
+This repository uses the [Ansible Molecule](https://ansible.readthedocs.io/projects/molecule/) framework for testing.
 
-### Installation
 
-With [`podman`](https://podman.io/) already installed, I was able to perform the tests after running
+### Installation / Setup
 
+<!-- With [`podman`](https://podman.io/) already installed, I was able to perform the tests after running -->
+
+1. Install `pip`, `ansible`, and `podman`. On Debian, they can all be installed with `apt`.
+
+    ``` bash
+    sudo apt install -y pip podman ansible
+    ```
+
+    Otherwise, follow these instructions to install podman and molecule
+    - podman: https://podman.io/docs/installation
+    - molecule: https://ansible.readthedocs.io/projects/molecule/installation/
+
+2. Create a python environment that you can use from root.
 ``` bash
+python3 -m venv cvmfs
+sudo su
+. cvmfs/bin/activate
 pip install ansible molecule molecule-podman
 ```
 
-
-Otherwise, follow these instructions to install podman and molecule
-- podman: https://podman.io/docs/installation
-- molecule: https://ansible.readthedocs.io/projects/molecule/installation/
-
-### Usage
-from the [`extensions`](extensions/) directory, run
+3. While still acting as root, and in this directory, run
 
 ``` bash
-molecule test
+ansible-galaxy collection install . --force
 ```
+
+
+
+### Usage
+1. Move into the [`extensions`](extensions/) directory
+    ``` bash
+    cd extensions/
+    ```
+2. Then, still as root, run
+    ``` bash
+    molecule test
+    ```
+    to keep the test environment around after the tests are complete, you can instead run
+    ```bash
+    molecule destroy && molecule test --destroy=never
+    ```
+
