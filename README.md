@@ -104,14 +104,23 @@ Test that things are working with the command
         cvmfs_server publish ${MY_REPO_NAME}
         ```
 
-    2. **On one of the Client machines**
+    2. **On a Stratum-1**
+
+       Synchronize the file with[^2]
+       ```bash
+       cvmfs_server snapshot repo.org.tld>
+       ```
+        again, replacing `<repo.org.tld>` with your cvmfs-repository name.
+
+    3. **On one of the Client machines**
+        
+        Test that you can access the file with the command
 
         ```bash
         /cvmfs/<repo.org.tld>/hello.sh
         ``` 
-        again, replacing `<repo.org.tld>` with your cvmfs-repository names.
 
-        You can also run the following test commands on the client[^2] [^3].
+        You can also run the following test commands on the client[^3] [^4].
 
         ```bash
         cvmfs_config chksetup  # should return OK
@@ -147,18 +156,19 @@ This repository uses the [Ansible Molecule](https://ansible.readthedocs.io/proje
     - molecule: https://ansible.readthedocs.io/projects/molecule/installation/
 
 2. Create a python environment that you can use from root.
-``` bash
-python3 -m venv cvmfs
-sudo su
-. cvmfs/bin/activate
-pip install ansible molecule molecule-podman
-```
+
+    ``` bash
+    python3 -m venv cvmfs
+    sudo su
+    . cvmfs/bin/activate
+    pip install ansible molecule molecule-podman
+    ```
 
 3. While still acting as root, and in this directory, run
 
-``` bash
-ansible-galaxy collection install . --force
-```
+    ``` bash
+    ansible-galaxy collection install . --force
+    ```
 
 
 
@@ -178,6 +188,8 @@ ansible-galaxy collection install . --force
 
 [^1]: https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/02_stratum0_client/#216-adding-files-to-the-repository
 
-[^2]: https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/02_stratum0_client/#223-mounting-the-repositories
+[^2]: https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/03_stratum1_proxies/#316-manually-synchronize-the-stratum-1
 
-[^3]: https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/03_stratum1_proxies/#333-test-the-new-configuration
+[^3]: https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/02_stratum0_client/#223-mounting-the-repositories
+
+[^4]: https://cvmfs-contrib.github.io/cvmfs-tutorial-2021/03_stratum1_proxies/#333-test-the-new-configuration
