@@ -81,7 +81,7 @@ Test that things are working with the command
     ansible-playbook cvmfs.setup.clients
     ```
 
-    after running `cvmfs.setup.all`, any of the individual playbooks above case be re-run if needed. However, they all rely on `cvmfs.setup.stratum_0` having been run once in order for the stratum-0 public keys to be copied over properly.
+    after running `cvmfs.setup.all`, any of the individual playbooks above can be re-run if needed. However, they all rely on `cvmfs.setup.stratum_0` having been run once in order for the stratum-0 public keys to be copied over properly.
 
 2. To ensure that the environment was set up correctly, you could try propagating a test file through all the machines. i.e. from
 
